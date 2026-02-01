@@ -153,8 +153,8 @@ export function playerButtons(paused: boolean) {
       .setEmoji("⏹")
       .setStyle(ButtonStyle.Danger),
     new ButtonBuilder()
-      .setCustomId("player:queue")
-      .setEmoji("📋")
+      .setCustomId("player:favorite")
+      .setEmoji("❤️")
       .setStyle(ButtonStyle.Secondary)
   );
 }
