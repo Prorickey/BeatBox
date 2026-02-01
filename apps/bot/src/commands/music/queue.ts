@@ -1,12 +1,9 @@
 import {
   SlashCommandBuilder,
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
   type ChatInputCommandInteraction,
 } from "discord.js";
 import type { BeatboxClient } from "../../structures/Client";
-import { errorEmbed, queueEmbed } from "../../utils/embeds";
+import { errorEmbed, queueEmbed, queueButtons } from "../../utils/embeds";
 import { formatDuration } from "@beatbox/shared";
 
 export const data = new SlashCommandBuilder()
@@ -74,5 +71,6 @@ export async function execute(
     value: `**${player.queue.length} tracks** — Total: ${formatDuration(totalDuration)}`,
   });
 
-  await interaction.reply({ embeds: [embed] });
+  const components = totalPages > 1 ? [queueButtons(clampedPage, totalPages)] : [];
+  await interaction.reply({ embeds: [embed], components });
 }

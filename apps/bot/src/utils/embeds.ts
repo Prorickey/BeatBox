@@ -114,6 +114,26 @@ export function successEmbed(message: string) {
     .setDescription(`✅ ${message}`);
 }
 
+export function queueButtons(currentPage: number, totalPages: number) {
+  return new ActionRowBuilder<ButtonBuilder>().addComponents(
+    new ButtonBuilder()
+      .setCustomId(`queue:prev:${currentPage - 1}`)
+      .setEmoji("◀")
+      .setStyle(ButtonStyle.Secondary)
+      .setDisabled(currentPage <= 0),
+    new ButtonBuilder()
+      .setCustomId("queue:page")
+      .setLabel(`Page ${currentPage + 1} / ${totalPages}`)
+      .setStyle(ButtonStyle.Secondary)
+      .setDisabled(true),
+    new ButtonBuilder()
+      .setCustomId(`queue:next:${currentPage + 1}`)
+      .setEmoji("▶")
+      .setStyle(ButtonStyle.Secondary)
+      .setDisabled(currentPage >= totalPages - 1)
+  );
+}
+
 export function playerButtons(paused: boolean) {
   return new ActionRowBuilder<ButtonBuilder>().addComponents(
     new ButtonBuilder()
