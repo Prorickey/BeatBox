@@ -3,6 +3,8 @@ import { join } from "path";
 import type { BeatboxClient } from "../structures/Client";
 import { prisma } from "@beatbox/database";
 import { broadcastState } from "./socketHandler";
+import { EmbedBuilder } from "discord.js";
+import { EMBED_COLORS, formatDuration, truncate } from "@beatbox/shared";
 
 export async function loadEvents(client: BeatboxClient) {
   const eventsPath = join(import.meta.dir, "..", "events");
@@ -32,6 +34,9 @@ export async function loadEvents(client: BeatboxClient) {
     const guildId = _player.guildId;
     console.log(`[player] Started: "${track.title}" by ${track.author} in guild ${guildId} (pos: ${_player.position}, dur: ${track.length}ms)`);
 
+    // Clear skip votes when a new track starts
+    client.skipVotes.delete(guildId);
+
     // Track history for "previous" button
     const previousTrack = client.currentTrackRef.get(guildId);
     if (previousTrack && !client.goingPrevious.has(guildId)) {
@@ -48,8 +53,42 @@ export async function loadEvents(client: BeatboxClient) {
     // Broadcast updated state to dashboard (track changed, queue shifted)
     broadcastState(client, guildId);
 
-    const requester = track.requester as { id: string; username: string } | undefined;
+    const requester = track.requester as { id: string; username: string; avatar: string | null } | undefined;
     if (!requester) return;
+
+    // Send now-playing announcement to text channel
+    try {
+      const settings = await prisma.guildSettings.findUnique({
+        where: { guildId },
+      });
+      // Default to true if no settings record exists (matches schema default)
+      const announceEnabled = settings ? settings.announceNowPlaying : true;
+
+      // Don't announce autoplay tracks
+      if (announceEnabled && requester.id !== "autoplay") {
+        const channel = client.channels.cache.get(_player.textId);
+        if (channel?.isTextBased()) {
+          const embed = new EmbedBuilder()
+            .setColor(EMBED_COLORS.PRIMARY)
+            .setAuthor({ name: "Now Playing 🎵" })
+            .setTitle(truncate(track.title, 60))
+            .setURL(track.uri ?? "")
+            .setDescription(`by **${track.author}** — ${formatDuration(track.length ?? 0)}`)
+            .setFooter({
+              text: `Requested by ${requester.username}`,
+              iconURL: requester.avatar ?? undefined,
+            });
+
+          if (track.artwork) {
+            embed.setThumbnail(track.artwork);
+          }
+
+          await channel.send({ embeds: [embed] });
+        }
+      }
+    } catch (err) {
+      console.error("[announcements] Failed to send now-playing message:", err);
+    }
 
     try {
       // Record the track play

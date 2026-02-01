@@ -24,6 +24,7 @@ export class BeatboxClient extends Client {
   public goingPrevious: Set<string> = new Set(); // guilds currently going to previous track
   public voiceJoinTimes: Map<string, number> = new Map(); // userId -> join timestamp (ms)
   public voiceUpdateTimers: Map<string, Timer> = new Map(); // userId -> flush interval
+  public skipVotes: Map<string, Set<string>> = new Map(); // guildId -> Set of user IDs who voted to skip
 
   constructor() {
     super({
