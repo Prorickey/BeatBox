@@ -523,47 +523,46 @@ async function handlePlay(
     ],
   });
 
-  // Search and add each track
-  let added = 0;
-  for (const track of playlist.tracks) {
-    try {
-      const result = await client.kazagumo.search(track.uri, {
-        requester: {
-          id: interaction.user.id,
-          username: interaction.user.username,
-          avatar: interaction.user.displayAvatarURL(),
-        },
-      });
+  // Search all tracks in parallel
+  const requester = {
+    id: interaction.user.id,
+    username: interaction.user.username,
+    avatar: interaction.user.displayAvatarURL(),
+  };
 
-      if (result.tracks.length > 0) {
-        player.queue.add(result.tracks[0]);
-        added++;
-      } else {
+  const results = await Promise.all(
+    playlist.tracks.map(async (track) => {
+      try {
+        const result = await client.kazagumo.search(track.uri, { requester });
+        if (result.tracks.length > 0) return result.tracks[0];
+
         // Fallback: search by title + author
         const fallback = await client.kazagumo.search(
           `${track.author} - ${track.title}`,
-          {
-            requester: {
-              id: interaction.user.id,
-              username: interaction.user.username,
-              avatar: interaction.user.displayAvatarURL(),
-            },
-          }
+          { requester }
         );
-        if (fallback.tracks.length > 0) {
-          player.queue.add(fallback.tracks[0]);
-          added++;
-        }
+        if (fallback.tracks.length > 0) return fallback.tracks[0];
+      } catch (err) {
+        console.warn(
+          `[playlist play] Failed to resolve: "${track.title}" — ${err}`
+        );
       }
-    } catch (err) {
-      console.warn(
-        `[playlist play] Failed to resolve: "${track.title}" — ${err}`
-      );
-    }
-  }
+      return null;
+    })
+  );
 
-  if (!player.playing && !player.paused) {
-    player.play();
+  // Add resolved tracks in order and start playback on the first one
+  let added = 0;
+  for (const resolved of results) {
+    if (!resolved) continue;
+    player.queue.add(resolved);
+    added++;
+
+    // Start playing as soon as the first track is added
+    if (!player.playing && !player.paused) {
+      player.play();
+      broadcastState(client, interaction.guildId!);
+    }
   }
 
   broadcastState(client, interaction.guildId!);
