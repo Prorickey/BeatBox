@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Music, LayoutDashboard, ListMusic, Settings, LogOut } from "lucide-react";
+import { Music, LayoutDashboard, ListMusic, Settings, HelpCircle, LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
 
@@ -10,6 +10,7 @@ const navItems = [
   { href: "/dashboard", label: "Servers", icon: LayoutDashboard },
   { href: "/dashboard/playlists", label: "Playlists", icon: ListMusic },
   { href: "/dashboard/settings", label: "Settings", icon: Settings },
+  { href: "/dashboard/help", label: "Help", icon: HelpCircle },
 ];
 
 export function Sidebar() {
