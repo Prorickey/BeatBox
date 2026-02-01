@@ -80,6 +80,13 @@ Copy `.env.example` to `.env` at the repo root. Required variables:
 
 The bot loads env from `../../.env` relative to `apps/bot/`. The dashboard uses Next.js env loading. `NEXT_PUBLIC_SOCKET_URL` configures the dashboard's Socket.io connection.
 
+## Workflow Preferences
+
+- Launch a subagent for each new task, in parallel when possible, making sure they don't overlap.
+- Control background services (bot, dashboard) and manage the subagents centrally.
+- Use the todo list for tracking when handling multiple requests.
+- **Commit after each completed task** to maintain a good version history.
+
 ## External Dependencies
 
 The bot requires a running **Lavalink** server for audio playback and a **PostgreSQL** database. Lavalink handles all audio source resolution (YouTube, Spotify, SoundCloud, etc.) — the bot itself does not download or process audio.

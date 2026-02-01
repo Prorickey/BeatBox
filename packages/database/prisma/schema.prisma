@@ -1,10 +1,10 @@
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model Guild {
@@ -29,9 +29,9 @@ model GuildSettings {
 
   announceNowPlaying Boolean @default(true)
   defaultRepeatMode  String  @default("off") // off, track, queue
-  maxQueueSize       Int     @default(500)
+  maxQueueSize       Int     @default(100)
   allowDuplicates    Boolean @default(true)
-  autoPlay           Boolean @default(false)
+  autoPlay           Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -75,6 +75,17 @@ model PlaylistTrack {
   @@index([playlistId])
 }
 
+model UserEngagement {
+  id               String    @id // Discord user ID (global per-user)
+  interactionCount Int       @default(0)
+  totalVoiceTime   Int       @default(0) // cumulative seconds in VC with bot
+  promoSent        Boolean   @default(false)
+  promoSentAt      DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model UserPreference {
   id     String @id // Discord user ID
 
@@ -83,4 +94,59 @@ model UserPreference {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model UserGuildCache {
+  userId     String
+  guildId    String
+  guildName  String
+  guildIcon  String?
+  botPresent Boolean @default(false)
+
+  cachedAt   DateTime @default(now())
+
+  @@id([userId, guildId])
+  @@index([userId])
+}
+
+model TrackPlay {
+  id         String   @id @default(cuid())
+  guildId    String
+  userId     String
+  username   String
+
+  title      String
+  author     String
+  uri        String
+  sourceName String
+  duration   Int      // track duration in ms
+
+  playedAt   DateTime @default(now())
+
+  @@index([guildId])
+  @@index([guildId, userId])
+  @@index([guildId, title, author])
+}
+
+model ListeningSession {
+  id           String    @id @default(cuid())
+  guildId      String
+  tracksPlayed Int       @default(0)
+
+  startedAt    DateTime  @default(now())
+  endedAt      DateTime?
+
+  @@index([guildId])
+}
+
+model Feedback {
+  id        String   @id @default(cuid())
+  userId    String
+  username  String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([read])
 }
