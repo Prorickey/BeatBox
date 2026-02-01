@@ -10,7 +10,6 @@ export function VolumeControl({ guildId }: { guildId: string }) {
   const [isDragging, setIsDragging] = useState(false);
   const [localVolume, setLocalVolume] = useState(state.volume);
   const localVolumeRef = useRef(state.volume);
-  const throttleRef = useRef<ReturnType<typeof setTimeout>>();
 
   // Sync local volume from server when not dragging
   useEffect(() => {
@@ -34,13 +33,6 @@ export function VolumeControl({ guildId }: { guildId: string }) {
   const handleChange = (value: number) => {
     setLocalVolume(value);
     localVolumeRef.current = value;
-
-    // Throttle: emit at most once per 150ms while dragging
-    if (throttleRef.current) return;
-    setVolume(value);
-    throttleRef.current = setTimeout(() => {
-      throttleRef.current = undefined;
-    }, 150);
   };
 
   const handlePointerDown = () => {
@@ -53,10 +45,7 @@ export function VolumeControl({ guildId }: { guildId: string }) {
     if (!isDragging) return;
 
     const handlePointerUp = () => {
-      clearTimeout(throttleRef.current);
-      throttleRef.current = undefined;
-
-      // Send the final definitive value
+      // Send the final definitive value only on commit
       setVolume(localVolumeRef.current);
       setIsDragging(false);
     };
