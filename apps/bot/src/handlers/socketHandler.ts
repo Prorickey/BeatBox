@@ -134,6 +134,22 @@ export function setupSocketServer(client: BeatboxClient) {
 
     socket.on(SocketEvents.QUEUE_ADD, async ({ guildId, query }: { guildId: string; query: string }) => {
       let player = client.kazagumo.players.get(guildId);
+
+      // If a player exists but the bot isn't actually in a voice channel, destroy the stale player
+      if (player) {
+        const guild = client.guilds.cache.get(guildId);
+        const botVoice = guild?.members.cache.get(client.user!.id)?.voice;
+        if (!botVoice?.channelId) {
+          const timer = client.disconnectTimers.get(guildId);
+          if (timer) {
+            clearTimeout(timer);
+            client.disconnectTimers.delete(guildId);
+          }
+          player.destroy();
+          player = undefined;
+        }
+      }
+
       if (!player) {
         // No player — try to create one by finding an occupied voice channel
         const guild = client.guilds.cache.get(guildId);
@@ -226,10 +242,18 @@ export function setupSocketServer(client: BeatboxClient) {
 
       let player = client.kazagumo.players.get(guildId);
 
-      // If a player exists but isn't connected to voice, destroy it
-      if (player && !player.voiceId) {
-        player.destroy();
-        player = undefined;
+      // If a player exists but the bot isn't actually in a voice channel, destroy the stale player
+      if (player) {
+        const botVoice = guild.members.cache.get(client.user!.id)?.voice;
+        if (!botVoice?.channelId) {
+          const timer = client.disconnectTimers.get(guildId);
+          if (timer) {
+            clearTimeout(timer);
+            client.disconnectTimers.delete(guildId);
+          }
+          player.destroy();
+          player = undefined;
+        }
       }
 
       if (!player) {
