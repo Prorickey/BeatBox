@@ -64,7 +64,7 @@ export function queueEmbed(
 
   if (currentTrack) {
     embed.setDescription(
-      `**Now Playing:**\n[${truncate(currentTrack.title, 50).replace(/[\[\]]/g, "\\$&")}](${currentTrack.uri}) — ${formatDuration(currentTrack.duration)}`
+      `**Now Playing:**\n[${truncate(currentTrack.title, 50).replace(/[\[\]]/g, "")}](${currentTrack.uri}) — ${formatDuration(currentTrack.duration)}`
     );
   }
 
@@ -77,7 +77,7 @@ export function queueEmbed(
     const trackList = tracks
       .map(
         (t, i) =>
-          `\`${(page * 10 + i + 1).toString().padStart(2, " ")}.\` [${truncate(t.title, 40).replace(/[\[\]]/g, "\\$&")}](${t.uri}) — ${formatDuration(t.duration)}`
+          `\`${(page * 10 + i + 1).toString().padStart(2, " ")}.\` [${truncate(t.title, 40).replace(/[\[\]]/g, "")}](${t.uri}) — ${formatDuration(t.duration)}`
       )
       .join("\n");
 
