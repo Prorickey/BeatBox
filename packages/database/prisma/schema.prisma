@@ -102,6 +102,7 @@ model UserGuildCache {
   guildName  String
   guildIcon  String?
   botPresent Boolean @default(false)
+  canManage  Boolean @default(false)
 
   cachedAt   DateTime @default(now())
 

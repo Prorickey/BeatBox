@@ -168,6 +168,7 @@ export const UserGuildCacheScalarFieldEnum = {
   guildName: 'guildName',
   guildIcon: 'guildIcon',
   botPresent: 'botPresent',
+  canManage: 'canManage',
   cachedAt: 'cachedAt'
 } as const
 

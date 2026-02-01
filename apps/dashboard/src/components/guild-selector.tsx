@@ -13,6 +13,7 @@ interface Guild {
   name: string;
   icon: string | null;
   botPresent: boolean;
+  canManage: boolean;
 }
 
 export function GuildSelector() {
@@ -131,7 +132,10 @@ export function GuildSelector() {
 
   const voiceGuild = voiceGuildId ? guilds.find((g) => g.id === voiceGuildId && g.botPresent) : null;
   const botGuilds = guilds.filter((g) => g.botPresent && g.id !== voiceGuildId);
-  const otherGuilds = guilds.filter((g) => !g.botPresent);
+  const otherGuilds = guilds.filter((g) => !g.botPresent).sort((a, b) => {
+    if (a.canManage !== b.canManage) return a.canManage ? -1 : 1;
+    return a.name.localeCompare(b.name);
+  });
 
   return (
     <div className="space-y-8">
@@ -178,6 +182,7 @@ export function GuildSelector() {
 }
 
 function GuildCard({ guild, highlight }: { guild: Guild; highlight?: boolean }) {
+  const canAdd = !guild.botPresent && guild.canManage;
   const content = (
     <div
       className={`group flex items-center gap-4 rounded-xl border p-4 transition-all ${
@@ -185,7 +190,9 @@ function GuildCard({ guild, highlight }: { guild: Guild; highlight?: boolean }) 
           ? "border-primary/50 bg-primary/5 hover:border-primary hover:bg-primary/10 cursor-pointer ring-1 ring-primary/20"
           : guild.botPresent
             ? "bg-card hover:border-primary/50 hover:bg-accent/50 cursor-pointer"
-            : "bg-card/50 opacity-60"
+            : canAdd
+              ? "bg-card hover:border-primary/50 hover:bg-accent/50 cursor-pointer"
+              : "bg-card/50 opacity-60"
       }`}
     >
       <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary/10">
@@ -212,7 +219,7 @@ function GuildCard({ guild, highlight }: { guild: Guild; highlight?: boolean }) 
           {guild.name}
         </h3>
         <p className="text-xs text-muted-foreground">
-          {guild.botPresent ? "Click to manage" : "Bot not added"}
+          {guild.botPresent ? "Click to manage" : canAdd ? "Click to add Beatbox" : "Bot not added"}
         </p>
       </div>
       {!guild.botPresent && (

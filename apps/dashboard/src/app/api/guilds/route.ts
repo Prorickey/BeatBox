@@ -5,12 +5,13 @@ import { prisma } from "@beatbox/database";
 
 const REFRESH_COOLDOWN_MS = 30_000; // 30 seconds between Discord API refreshes
 
-function cachedGuildsResponse(cached: { guildId: string; guildName: string; guildIcon: string | null; botPresent: boolean }[]) {
+function cachedGuildsResponse(cached: { guildId: string; guildName: string; guildIcon: string | null; botPresent: boolean; canManage: boolean }[]) {
   return cached.map((g) => ({
     id: g.guildId,
     name: g.guildName,
     icon: g.guildIcon,
     botPresent: g.botPresent,
+    canManage: g.canManage,
   }));
 }
 
@@ -98,15 +99,21 @@ export async function GET(request: Request) {
       }
     }
 
+    const MANAGE_GUILD = 0x20;
+    const ADMINISTRATOR = 0x8;
     const guilds = userGuilds.map(
-      (g: { id: string; name: string; icon: string | null }) => ({
-        id: g.id,
-        name: g.name,
-        icon: g.icon
-          ? `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.${g.icon.startsWith("a_") ? "gif" : "png"}?size=128`
-          : null,
-        botPresent: botGuildIds.has(g.id),
-      })
+      (g: { id: string; name: string; icon: string | null; permissions: string }) => {
+        const perms = parseInt(g.permissions);
+        return {
+          id: g.id,
+          name: g.name,
+          icon: g.icon
+            ? `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.${g.icon.startsWith("a_") ? "gif" : "png"}?size=128`
+            : null,
+          botPresent: botGuildIds.has(g.id),
+          canManage: (perms & MANAGE_GUILD) !== 0 || (perms & ADMINISTRATOR) !== 0,
+        };
+      }
     );
 
     // Update cache in background — delete stale entries and upsert current ones
@@ -119,7 +126,7 @@ export async function GET(request: Request) {
         where: { userId, guildId: { notIn: guildIds } },
       }),
       // Upsert all current guilds
-      ...guilds.map((g: { id: string; name: string; icon: string | null; botPresent: boolean }) =>
+      ...guilds.map((g: { id: string; name: string; icon: string | null; botPresent: boolean; canManage: boolean }) =>
         prisma.userGuildCache.upsert({
           where: { userId_guildId: { userId, guildId: g.id } },
           create: {
@@ -128,12 +135,14 @@ export async function GET(request: Request) {
             guildName: g.name,
             guildIcon: g.icon,
             botPresent: g.botPresent,
+            canManage: g.canManage,
             cachedAt: now,
           },
           update: {
             guildName: g.name,
             guildIcon: g.icon,
             botPresent: g.botPresent,
+            canManage: g.canManage,
             cachedAt: now,
           },
         })

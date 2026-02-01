@@ -30,6 +30,7 @@ export type UserGuildCacheMinAggregateOutputType = {
   guildName: string | null
   guildIcon: string | null
   botPresent: boolean | null
+  canManage: boolean | null
   cachedAt: Date | null
 }
 
@@ -39,6 +40,7 @@ export type UserGuildCacheMaxAggregateOutputType = {
   guildName: string | null
   guildIcon: string | null
   botPresent: boolean | null
+  canManage: boolean | null
   cachedAt: Date | null
 }
 
@@ -48,6 +50,7 @@ export type UserGuildCacheCountAggregateOutputType = {
   guildName: number
   guildIcon: number
   botPresent: number
+  canManage: number
   cachedAt: number
   _all: number
 }
@@ -59,6 +62,7 @@ export type UserGuildCacheMinAggregateInputType = {
   guildName?: true
   guildIcon?: true
   botPresent?: true
+  canManage?: true
   cachedAt?: true
 }
 
@@ -68,6 +72,7 @@ export type UserGuildCacheMaxAggregateInputType = {
   guildName?: true
   guildIcon?: true
   botPresent?: true
+  canManage?: true
   cachedAt?: true
 }
 
@@ -77,6 +82,7 @@ export type UserGuildCacheCountAggregateInputType = {
   guildName?: true
   guildIcon?: true
   botPresent?: true
+  canManage?: true
   cachedAt?: true
   _all?: true
 }
@@ -159,6 +165,7 @@ export type UserGuildCacheGroupByOutputType = {
   guildName: string
   guildIcon: string | null
   botPresent: boolean
+  canManage: boolean
   cachedAt: Date
   _count: UserGuildCacheCountAggregateOutputType | null
   _min: UserGuildCacheMinAggregateOutputType | null
@@ -189,6 +196,7 @@ export type UserGuildCacheWhereInput = {
   guildName?: Prisma.StringFilter<"UserGuildCache"> | string
   guildIcon?: Prisma.StringNullableFilter<"UserGuildCache"> | string | null
   botPresent?: Prisma.BoolFilter<"UserGuildCache"> | boolean
+  canManage?: Prisma.BoolFilter<"UserGuildCache"> | boolean
   cachedAt?: Prisma.DateTimeFilter<"UserGuildCache"> | Date | string
 }
 
@@ -198,6 +206,7 @@ export type UserGuildCacheOrderByWithRelationInput = {
   guildName?: Prisma.SortOrder
   guildIcon?: Prisma.SortOrderInput | Prisma.SortOrder
   botPresent?: Prisma.SortOrder
+  canManage?: Prisma.SortOrder
   cachedAt?: Prisma.SortOrder
 }
 
@@ -211,6 +220,7 @@ export type UserGuildCacheWhereUniqueInput = Prisma.AtLeast<{
   guildName?: Prisma.StringFilter<"UserGuildCache"> | string
   guildIcon?: Prisma.StringNullableFilter<"UserGuildCache"> | string | null
   botPresent?: Prisma.BoolFilter<"UserGuildCache"> | boolean
+  canManage?: Prisma.BoolFilter<"UserGuildCache"> | boolean
   cachedAt?: Prisma.DateTimeFilter<"UserGuildCache"> | Date | string
 }, "userId_guildId">
 
@@ -220,6 +230,7 @@ export type UserGuildCacheOrderByWithAggregationInput = {
   guildName?: Prisma.SortOrder
   guildIcon?: Prisma.SortOrderInput | Prisma.SortOrder
   botPresent?: Prisma.SortOrder
+  canManage?: Prisma.SortOrder
   cachedAt?: Prisma.SortOrder
   _count?: Prisma.UserGuildCacheCountOrderByAggregateInput
   _max?: Prisma.UserGuildCacheMaxOrderByAggregateInput
@@ -235,6 +246,7 @@ export type UserGuildCacheScalarWhereWithAggregatesInput = {
   guildName?: Prisma.StringWithAggregatesFilter<"UserGuildCache"> | string
   guildIcon?: Prisma.StringNullableWithAggregatesFilter<"UserGuildCache"> | string | null
   botPresent?: Prisma.BoolWithAggregatesFilter<"UserGuildCache"> | boolean
+  canManage?: Prisma.BoolWithAggregatesFilter<"UserGuildCache"> | boolean
   cachedAt?: Prisma.DateTimeWithAggregatesFilter<"UserGuildCache"> | Date | string
 }
 
@@ -244,6 +256,7 @@ export type UserGuildCacheCreateInput = {
   guildName: string
   guildIcon?: string | null
   botPresent?: boolean
+  canManage?: boolean
   cachedAt?: Date | string
 }
 
@@ -253,6 +266,7 @@ export type UserGuildCacheUncheckedCreateInput = {
   guildName: string
   guildIcon?: string | null
   botPresent?: boolean
+  canManage?: boolean
   cachedAt?: Date | string
 }
 
@@ -262,6 +276,7 @@ export type UserGuildCacheUpdateInput = {
   guildName?: Prisma.StringFieldUpdateOperationsInput | string
   guildIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   botPresent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canManage?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cachedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -271,6 +286,7 @@ export type UserGuildCacheUncheckedUpdateInput = {
   guildName?: Prisma.StringFieldUpdateOperationsInput | string
   guildIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   botPresent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canManage?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cachedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -280,6 +296,7 @@ export type UserGuildCacheCreateManyInput = {
   guildName: string
   guildIcon?: string | null
   botPresent?: boolean
+  canManage?: boolean
   cachedAt?: Date | string
 }
 
@@ -289,6 +306,7 @@ export type UserGuildCacheUpdateManyMutationInput = {
   guildName?: Prisma.StringFieldUpdateOperationsInput | string
   guildIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   botPresent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canManage?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cachedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -298,6 +316,7 @@ export type UserGuildCacheUncheckedUpdateManyInput = {
   guildName?: Prisma.StringFieldUpdateOperationsInput | string
   guildIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   botPresent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canManage?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cachedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -312,6 +331,7 @@ export type UserGuildCacheCountOrderByAggregateInput = {
   guildName?: Prisma.SortOrder
   guildIcon?: Prisma.SortOrder
   botPresent?: Prisma.SortOrder
+  canManage?: Prisma.SortOrder
   cachedAt?: Prisma.SortOrder
 }
 
@@ -321,6 +341,7 @@ export type UserGuildCacheMaxOrderByAggregateInput = {
   guildName?: Prisma.SortOrder
   guildIcon?: Prisma.SortOrder
   botPresent?: Prisma.SortOrder
+  canManage?: Prisma.SortOrder
   cachedAt?: Prisma.SortOrder
 }
 
@@ -330,6 +351,7 @@ export type UserGuildCacheMinOrderByAggregateInput = {
   guildName?: Prisma.SortOrder
   guildIcon?: Prisma.SortOrder
   botPresent?: Prisma.SortOrder
+  canManage?: Prisma.SortOrder
   cachedAt?: Prisma.SortOrder
 }
 
@@ -341,6 +363,7 @@ export type UserGuildCacheSelect<ExtArgs extends runtime.Types.Extensions.Intern
   guildName?: boolean
   guildIcon?: boolean
   botPresent?: boolean
+  canManage?: boolean
   cachedAt?: boolean
 }, ExtArgs["result"]["userGuildCache"]>
 
@@ -350,6 +373,7 @@ export type UserGuildCacheSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   guildName?: boolean
   guildIcon?: boolean
   botPresent?: boolean
+  canManage?: boolean
   cachedAt?: boolean
 }, ExtArgs["result"]["userGuildCache"]>
 
@@ -359,6 +383,7 @@ export type UserGuildCacheSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   guildName?: boolean
   guildIcon?: boolean
   botPresent?: boolean
+  canManage?: boolean
   cachedAt?: boolean
 }, ExtArgs["result"]["userGuildCache"]>
 
@@ -368,10 +393,11 @@ export type UserGuildCacheSelectScalar = {
   guildName?: boolean
   guildIcon?: boolean
   botPresent?: boolean
+  canManage?: boolean
   cachedAt?: boolean
 }
 
-export type UserGuildCacheOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"userId" | "guildId" | "guildName" | "guildIcon" | "botPresent" | "cachedAt", ExtArgs["result"]["userGuildCache"]>
+export type UserGuildCacheOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"userId" | "guildId" | "guildName" | "guildIcon" | "botPresent" | "canManage" | "cachedAt", ExtArgs["result"]["userGuildCache"]>
 
 export type $UserGuildCachePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "UserGuildCache"
@@ -382,6 +408,7 @@ export type $UserGuildCachePayload<ExtArgs extends runtime.Types.Extensions.Inte
     guildName: string
     guildIcon: string | null
     botPresent: boolean
+    canManage: boolean
     cachedAt: Date
   }, ExtArgs["result"]["userGuildCache"]>
   composites: {}
@@ -811,6 +838,7 @@ export interface UserGuildCacheFieldRefs {
   readonly guildName: Prisma.FieldRef<"UserGuildCache", 'String'>
   readonly guildIcon: Prisma.FieldRef<"UserGuildCache", 'String'>
   readonly botPresent: Prisma.FieldRef<"UserGuildCache", 'Boolean'>
+  readonly canManage: Prisma.FieldRef<"UserGuildCache", 'Boolean'>
   readonly cachedAt: Prisma.FieldRef<"UserGuildCache", 'DateTime'>
 }
     
