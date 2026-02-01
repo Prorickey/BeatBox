@@ -29,6 +29,7 @@ async function handleCommand(
   const command = client.commands.get(interaction.commandName);
   if (!command) return;
 
+  const start = performance.now();
   try {
     await command.execute(interaction, client);
   } catch (error) {
@@ -42,5 +43,10 @@ async function handleCommand(
     } else {
       await interaction.reply(reply);
     }
+  } finally {
+    const ms = (performance.now() - start).toFixed(0);
+    const sub = interaction.options.getSubcommand(false);
+    const label = sub ? `${interaction.commandName} ${sub}` : interaction.commandName;
+    console.log(`[cmd] /${label} — ${ms}ms`);
   }
 }
