@@ -2,6 +2,7 @@ import type { ButtonInteraction } from "discord.js";
 import type { BeatboxClient } from "../structures/Client";
 import { errorEmbed, successEmbed, queueEmbed, queueButtons } from "../utils/embeds";
 import { broadcastState } from "./socketHandler";
+import { updateRequestChannelEmbed } from "./eventHandler";
 import { formatDuration, truncate } from "@beatbox/shared";
 import { prisma } from "@beatbox/database";
 
@@ -43,6 +44,7 @@ export async function handleButton(
         embeds: [successEmbed("⏸️ Paused the player.")],
         ephemeral: true,
       });
+      await updateRequestChannelEmbed(client, interaction.guildId!, player.queue.current, true);
       break;
     case "player:resume":
       player.pause(false);
@@ -50,6 +52,7 @@ export async function handleButton(
         embeds: [successEmbed("▶️ Resumed the player.")],
         ephemeral: true,
       });
+      await updateRequestChannelEmbed(client, interaction.guildId!, player.queue.current, false);
       break;
     case "player:skip":
       player.skip();

@@ -393,7 +393,11 @@ export const ModelName = {
   UserGuildCache: 'UserGuildCache',
   TrackPlay: 'TrackPlay',
   ListeningSession: 'ListeningSession',
-  Feedback: 'Feedback'
+  Feedback: 'Feedback',
+  SavedQueue: 'SavedQueue',
+  SavedQueueTrack: 'SavedQueueTrack',
+  LastQueue: 'LastQueue',
+  LastQueueTrack: 'LastQueueTrack'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -409,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "guild" | "guildSettings" | "playlist" | "playlistTrack" | "userEngagement" | "userPreference" | "userGuildCache" | "trackPlay" | "listeningSession" | "feedback"
+    modelProps: "guild" | "guildSettings" | "playlist" | "playlistTrack" | "userEngagement" | "userPreference" | "userGuildCache" | "trackPlay" | "listeningSession" | "feedback" | "savedQueue" | "savedQueueTrack" | "lastQueue" | "lastQueueTrack"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1153,6 +1157,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    SavedQueue: {
+      payload: Prisma.$SavedQueuePayload<ExtArgs>
+      fields: Prisma.SavedQueueFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SavedQueueFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueuePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SavedQueueFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueuePayload>
+        }
+        findFirst: {
+          args: Prisma.SavedQueueFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueuePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SavedQueueFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueuePayload>
+        }
+        findMany: {
+          args: Prisma.SavedQueueFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueuePayload>[]
+        }
+        create: {
+          args: Prisma.SavedQueueCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueuePayload>
+        }
+        createMany: {
+          args: Prisma.SavedQueueCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SavedQueueCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueuePayload>[]
+        }
+        delete: {
+          args: Prisma.SavedQueueDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueuePayload>
+        }
+        update: {
+          args: Prisma.SavedQueueUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueuePayload>
+        }
+        deleteMany: {
+          args: Prisma.SavedQueueDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SavedQueueUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SavedQueueUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueuePayload>[]
+        }
+        upsert: {
+          args: Prisma.SavedQueueUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueuePayload>
+        }
+        aggregate: {
+          args: Prisma.SavedQueueAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSavedQueue>
+        }
+        groupBy: {
+          args: Prisma.SavedQueueGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SavedQueueGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SavedQueueCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SavedQueueCountAggregateOutputType> | number
+        }
+      }
+    }
+    SavedQueueTrack: {
+      payload: Prisma.$SavedQueueTrackPayload<ExtArgs>
+      fields: Prisma.SavedQueueTrackFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SavedQueueTrackFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueueTrackPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SavedQueueTrackFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueueTrackPayload>
+        }
+        findFirst: {
+          args: Prisma.SavedQueueTrackFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueueTrackPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SavedQueueTrackFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueueTrackPayload>
+        }
+        findMany: {
+          args: Prisma.SavedQueueTrackFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueueTrackPayload>[]
+        }
+        create: {
+          args: Prisma.SavedQueueTrackCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueueTrackPayload>
+        }
+        createMany: {
+          args: Prisma.SavedQueueTrackCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SavedQueueTrackCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueueTrackPayload>[]
+        }
+        delete: {
+          args: Prisma.SavedQueueTrackDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueueTrackPayload>
+        }
+        update: {
+          args: Prisma.SavedQueueTrackUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueueTrackPayload>
+        }
+        deleteMany: {
+          args: Prisma.SavedQueueTrackDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SavedQueueTrackUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SavedQueueTrackUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueueTrackPayload>[]
+        }
+        upsert: {
+          args: Prisma.SavedQueueTrackUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedQueueTrackPayload>
+        }
+        aggregate: {
+          args: Prisma.SavedQueueTrackAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSavedQueueTrack>
+        }
+        groupBy: {
+          args: Prisma.SavedQueueTrackGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SavedQueueTrackGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SavedQueueTrackCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SavedQueueTrackCountAggregateOutputType> | number
+        }
+      }
+    }
+    LastQueue: {
+      payload: Prisma.$LastQueuePayload<ExtArgs>
+      fields: Prisma.LastQueueFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LastQueueFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueuePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LastQueueFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueuePayload>
+        }
+        findFirst: {
+          args: Prisma.LastQueueFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueuePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LastQueueFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueuePayload>
+        }
+        findMany: {
+          args: Prisma.LastQueueFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueuePayload>[]
+        }
+        create: {
+          args: Prisma.LastQueueCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueuePayload>
+        }
+        createMany: {
+          args: Prisma.LastQueueCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LastQueueCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueuePayload>[]
+        }
+        delete: {
+          args: Prisma.LastQueueDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueuePayload>
+        }
+        update: {
+          args: Prisma.LastQueueUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueuePayload>
+        }
+        deleteMany: {
+          args: Prisma.LastQueueDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LastQueueUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LastQueueUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueuePayload>[]
+        }
+        upsert: {
+          args: Prisma.LastQueueUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueuePayload>
+        }
+        aggregate: {
+          args: Prisma.LastQueueAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLastQueue>
+        }
+        groupBy: {
+          args: Prisma.LastQueueGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LastQueueGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LastQueueCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LastQueueCountAggregateOutputType> | number
+        }
+      }
+    }
+    LastQueueTrack: {
+      payload: Prisma.$LastQueueTrackPayload<ExtArgs>
+      fields: Prisma.LastQueueTrackFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LastQueueTrackFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueueTrackPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LastQueueTrackFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueueTrackPayload>
+        }
+        findFirst: {
+          args: Prisma.LastQueueTrackFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueueTrackPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LastQueueTrackFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueueTrackPayload>
+        }
+        findMany: {
+          args: Prisma.LastQueueTrackFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueueTrackPayload>[]
+        }
+        create: {
+          args: Prisma.LastQueueTrackCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueueTrackPayload>
+        }
+        createMany: {
+          args: Prisma.LastQueueTrackCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LastQueueTrackCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueueTrackPayload>[]
+        }
+        delete: {
+          args: Prisma.LastQueueTrackDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueueTrackPayload>
+        }
+        update: {
+          args: Prisma.LastQueueTrackUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueueTrackPayload>
+        }
+        deleteMany: {
+          args: Prisma.LastQueueTrackDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LastQueueTrackUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LastQueueTrackUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueueTrackPayload>[]
+        }
+        upsert: {
+          args: Prisma.LastQueueTrackUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LastQueueTrackPayload>
+        }
+        aggregate: {
+          args: Prisma.LastQueueTrackAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLastQueueTrack>
+        }
+        groupBy: {
+          args: Prisma.LastQueueTrackGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LastQueueTrackGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LastQueueTrackCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LastQueueTrackCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1215,6 +1515,8 @@ export const GuildSettingsScalarFieldEnum = {
   allowDuplicates: 'allowDuplicates',
   autoPlay: 'autoPlay',
   twentyFourSeven: 'twentyFourSeven',
+  requestChannelId: 'requestChannelId',
+  requestMessageId: 'requestMessageId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1326,6 +1628,58 @@ export const FeedbackScalarFieldEnum = {
 } as const
 
 export type FeedbackScalarFieldEnum = (typeof FeedbackScalarFieldEnum)[keyof typeof FeedbackScalarFieldEnum]
+
+
+export const SavedQueueScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  userId: 'userId',
+  guildId: 'guildId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SavedQueueScalarFieldEnum = (typeof SavedQueueScalarFieldEnum)[keyof typeof SavedQueueScalarFieldEnum]
+
+
+export const SavedQueueTrackScalarFieldEnum = {
+  id: 'id',
+  savedQueueId: 'savedQueueId',
+  title: 'title',
+  author: 'author',
+  duration: 'duration',
+  uri: 'uri',
+  artworkUrl: 'artworkUrl',
+  sourceName: 'sourceName',
+  position: 'position'
+} as const
+
+export type SavedQueueTrackScalarFieldEnum = (typeof SavedQueueTrackScalarFieldEnum)[keyof typeof SavedQueueTrackScalarFieldEnum]
+
+
+export const LastQueueScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  savedAt: 'savedAt'
+} as const
+
+export type LastQueueScalarFieldEnum = (typeof LastQueueScalarFieldEnum)[keyof typeof LastQueueScalarFieldEnum]
+
+
+export const LastQueueTrackScalarFieldEnum = {
+  id: 'id',
+  lastQueueId: 'lastQueueId',
+  title: 'title',
+  author: 'author',
+  duration: 'duration',
+  uri: 'uri',
+  artworkUrl: 'artworkUrl',
+  sourceName: 'sourceName',
+  position: 'position',
+  wasPlaying: 'wasPlaying'
+} as const
+
+export type LastQueueTrackScalarFieldEnum = (typeof LastQueueTrackScalarFieldEnum)[keyof typeof LastQueueTrackScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1525,6 +1879,10 @@ export type GlobalOmitConfig = {
   trackPlay?: Prisma.TrackPlayOmit
   listeningSession?: Prisma.ListeningSessionOmit
   feedback?: Prisma.FeedbackOmit
+  savedQueue?: Prisma.SavedQueueOmit
+  savedQueueTrack?: Prisma.SavedQueueTrackOmit
+  lastQueue?: Prisma.LastQueueOmit
+  lastQueueTrack?: Prisma.LastQueueTrackOmit
 }
 
 /* Types for Logging */

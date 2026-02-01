@@ -34,6 +34,9 @@ model GuildSettings {
   autoPlay           Boolean @default(true)
   twentyFourSeven    Boolean @default(false)
 
+  requestChannelId   String? // Song request channel ID
+  requestMessageId   String? // Persistent embed message ID
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

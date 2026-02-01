@@ -60,7 +60,11 @@ export const ModelName = {
   UserGuildCache: 'UserGuildCache',
   TrackPlay: 'TrackPlay',
   ListeningSession: 'ListeningSession',
-  Feedback: 'Feedback'
+  Feedback: 'Feedback',
+  SavedQueue: 'SavedQueue',
+  SavedQueueTrack: 'SavedQueueTrack',
+  LastQueue: 'LastQueue',
+  LastQueueTrack: 'LastQueueTrack'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -102,6 +106,8 @@ export const GuildSettingsScalarFieldEnum = {
   allowDuplicates: 'allowDuplicates',
   autoPlay: 'autoPlay',
   twentyFourSeven: 'twentyFourSeven',
+  requestChannelId: 'requestChannelId',
+  requestMessageId: 'requestMessageId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -213,6 +219,58 @@ export const FeedbackScalarFieldEnum = {
 } as const
 
 export type FeedbackScalarFieldEnum = (typeof FeedbackScalarFieldEnum)[keyof typeof FeedbackScalarFieldEnum]
+
+
+export const SavedQueueScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  userId: 'userId',
+  guildId: 'guildId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SavedQueueScalarFieldEnum = (typeof SavedQueueScalarFieldEnum)[keyof typeof SavedQueueScalarFieldEnum]
+
+
+export const SavedQueueTrackScalarFieldEnum = {
+  id: 'id',
+  savedQueueId: 'savedQueueId',
+  title: 'title',
+  author: 'author',
+  duration: 'duration',
+  uri: 'uri',
+  artworkUrl: 'artworkUrl',
+  sourceName: 'sourceName',
+  position: 'position'
+} as const
+
+export type SavedQueueTrackScalarFieldEnum = (typeof SavedQueueTrackScalarFieldEnum)[keyof typeof SavedQueueTrackScalarFieldEnum]
+
+
+export const LastQueueScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  savedAt: 'savedAt'
+} as const
+
+export type LastQueueScalarFieldEnum = (typeof LastQueueScalarFieldEnum)[keyof typeof LastQueueScalarFieldEnum]
+
+
+export const LastQueueTrackScalarFieldEnum = {
+  id: 'id',
+  lastQueueId: 'lastQueueId',
+  title: 'title',
+  author: 'author',
+  duration: 'duration',
+  uri: 'uri',
+  artworkUrl: 'artworkUrl',
+  sourceName: 'sourceName',
+  position: 'position',
+  wasPlaying: 'wasPlaying'
+} as const
+
+export type LastQueueTrackScalarFieldEnum = (typeof LastQueueTrackScalarFieldEnum)[keyof typeof LastQueueTrackScalarFieldEnum]
 
 
 export const SortOrder = {

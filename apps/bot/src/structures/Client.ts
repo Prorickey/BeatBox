@@ -25,6 +25,7 @@ export class BeatboxClient extends Client {
   public voiceJoinTimes: Map<string, number> = new Map(); // userId -> join timestamp (ms)
   public voiceUpdateTimers: Map<string, Timer> = new Map(); // userId -> flush interval
   public skipVotes: Map<string, Set<string>> = new Map(); // guildId -> Set of user IDs who voted to skip
+  public lastQueueCache: Map<string, { current: any; tracks: any[] }> = new Map(); // guildId -> last queue state
 
   constructor() {
     super({
@@ -32,6 +33,7 @@ export class BeatboxClient extends Client {
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildVoiceStates,
         GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
       ],
     });
 

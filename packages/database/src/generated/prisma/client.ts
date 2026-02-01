@@ -89,3 +89,23 @@ export type ListeningSession = Prisma.ListeningSessionModel
  * 
  */
 export type Feedback = Prisma.FeedbackModel
+/**
+ * Model SavedQueue
+ * 
+ */
+export type SavedQueue = Prisma.SavedQueueModel
+/**
+ * Model SavedQueueTrack
+ * 
+ */
+export type SavedQueueTrack = Prisma.SavedQueueTrackModel
+/**
+ * Model LastQueue
+ * 
+ */
+export type LastQueue = Prisma.LastQueueModel
+/**
+ * Model LastQueueTrack
+ * 
+ */
+export type LastQueueTrack = Prisma.LastQueueTrackModel

@@ -43,6 +43,8 @@ export type GuildSettingsMinAggregateOutputType = {
   allowDuplicates: boolean | null
   autoPlay: boolean | null
   twentyFourSeven: boolean | null
+  requestChannelId: string | null
+  requestMessageId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,6 +58,8 @@ export type GuildSettingsMaxAggregateOutputType = {
   allowDuplicates: boolean | null
   autoPlay: boolean | null
   twentyFourSeven: boolean | null
+  requestChannelId: string | null
+  requestMessageId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -69,6 +73,8 @@ export type GuildSettingsCountAggregateOutputType = {
   allowDuplicates: number
   autoPlay: number
   twentyFourSeven: number
+  requestChannelId: number
+  requestMessageId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -92,6 +98,8 @@ export type GuildSettingsMinAggregateInputType = {
   allowDuplicates?: true
   autoPlay?: true
   twentyFourSeven?: true
+  requestChannelId?: true
+  requestMessageId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -105,6 +113,8 @@ export type GuildSettingsMaxAggregateInputType = {
   allowDuplicates?: true
   autoPlay?: true
   twentyFourSeven?: true
+  requestChannelId?: true
+  requestMessageId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -118,6 +128,8 @@ export type GuildSettingsCountAggregateInputType = {
   allowDuplicates?: true
   autoPlay?: true
   twentyFourSeven?: true
+  requestChannelId?: true
+  requestMessageId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -218,6 +230,8 @@ export type GuildSettingsGroupByOutputType = {
   allowDuplicates: boolean
   autoPlay: boolean
   twentyFourSeven: boolean
+  requestChannelId: string | null
+  requestMessageId: string | null
   createdAt: Date
   updatedAt: Date
   _count: GuildSettingsCountAggregateOutputType | null
@@ -254,6 +268,8 @@ export type GuildSettingsWhereInput = {
   allowDuplicates?: Prisma.BoolFilter<"GuildSettings"> | boolean
   autoPlay?: Prisma.BoolFilter<"GuildSettings"> | boolean
   twentyFourSeven?: Prisma.BoolFilter<"GuildSettings"> | boolean
+  requestChannelId?: Prisma.StringNullableFilter<"GuildSettings"> | string | null
+  requestMessageId?: Prisma.StringNullableFilter<"GuildSettings"> | string | null
   createdAt?: Prisma.DateTimeFilter<"GuildSettings"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"GuildSettings"> | Date | string
   guild?: Prisma.XOR<Prisma.GuildScalarRelationFilter, Prisma.GuildWhereInput>
@@ -268,6 +284,8 @@ export type GuildSettingsOrderByWithRelationInput = {
   allowDuplicates?: Prisma.SortOrder
   autoPlay?: Prisma.SortOrder
   twentyFourSeven?: Prisma.SortOrder
+  requestChannelId?: Prisma.SortOrderInput | Prisma.SortOrder
+  requestMessageId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   guild?: Prisma.GuildOrderByWithRelationInput
@@ -285,6 +303,8 @@ export type GuildSettingsWhereUniqueInput = Prisma.AtLeast<{
   allowDuplicates?: Prisma.BoolFilter<"GuildSettings"> | boolean
   autoPlay?: Prisma.BoolFilter<"GuildSettings"> | boolean
   twentyFourSeven?: Prisma.BoolFilter<"GuildSettings"> | boolean
+  requestChannelId?: Prisma.StringNullableFilter<"GuildSettings"> | string | null
+  requestMessageId?: Prisma.StringNullableFilter<"GuildSettings"> | string | null
   createdAt?: Prisma.DateTimeFilter<"GuildSettings"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"GuildSettings"> | Date | string
   guild?: Prisma.XOR<Prisma.GuildScalarRelationFilter, Prisma.GuildWhereInput>
@@ -299,6 +319,8 @@ export type GuildSettingsOrderByWithAggregationInput = {
   allowDuplicates?: Prisma.SortOrder
   autoPlay?: Prisma.SortOrder
   twentyFourSeven?: Prisma.SortOrder
+  requestChannelId?: Prisma.SortOrderInput | Prisma.SortOrder
+  requestMessageId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.GuildSettingsCountOrderByAggregateInput
@@ -320,6 +342,8 @@ export type GuildSettingsScalarWhereWithAggregatesInput = {
   allowDuplicates?: Prisma.BoolWithAggregatesFilter<"GuildSettings"> | boolean
   autoPlay?: Prisma.BoolWithAggregatesFilter<"GuildSettings"> | boolean
   twentyFourSeven?: Prisma.BoolWithAggregatesFilter<"GuildSettings"> | boolean
+  requestChannelId?: Prisma.StringNullableWithAggregatesFilter<"GuildSettings"> | string | null
+  requestMessageId?: Prisma.StringNullableWithAggregatesFilter<"GuildSettings"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"GuildSettings"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"GuildSettings"> | Date | string
 }
@@ -332,6 +356,8 @@ export type GuildSettingsCreateInput = {
   allowDuplicates?: boolean
   autoPlay?: boolean
   twentyFourSeven?: boolean
+  requestChannelId?: string | null
+  requestMessageId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guild: Prisma.GuildCreateNestedOneWithoutSettingsInput
@@ -346,6 +372,8 @@ export type GuildSettingsUncheckedCreateInput = {
   allowDuplicates?: boolean
   autoPlay?: boolean
   twentyFourSeven?: boolean
+  requestChannelId?: string | null
+  requestMessageId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -358,6 +386,8 @@ export type GuildSettingsUpdateInput = {
   allowDuplicates?: Prisma.BoolFieldUpdateOperationsInput | boolean
   autoPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twentyFourSeven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  requestChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requestMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guild?: Prisma.GuildUpdateOneRequiredWithoutSettingsNestedInput
@@ -372,6 +402,8 @@ export type GuildSettingsUncheckedUpdateInput = {
   allowDuplicates?: Prisma.BoolFieldUpdateOperationsInput | boolean
   autoPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twentyFourSeven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  requestChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requestMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -385,6 +417,8 @@ export type GuildSettingsCreateManyInput = {
   allowDuplicates?: boolean
   autoPlay?: boolean
   twentyFourSeven?: boolean
+  requestChannelId?: string | null
+  requestMessageId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -397,6 +431,8 @@ export type GuildSettingsUpdateManyMutationInput = {
   allowDuplicates?: Prisma.BoolFieldUpdateOperationsInput | boolean
   autoPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twentyFourSeven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  requestChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requestMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -410,6 +446,8 @@ export type GuildSettingsUncheckedUpdateManyInput = {
   allowDuplicates?: Prisma.BoolFieldUpdateOperationsInput | boolean
   autoPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twentyFourSeven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  requestChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requestMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -428,6 +466,8 @@ export type GuildSettingsCountOrderByAggregateInput = {
   allowDuplicates?: Prisma.SortOrder
   autoPlay?: Prisma.SortOrder
   twentyFourSeven?: Prisma.SortOrder
+  requestChannelId?: Prisma.SortOrder
+  requestMessageId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -445,6 +485,8 @@ export type GuildSettingsMaxOrderByAggregateInput = {
   allowDuplicates?: Prisma.SortOrder
   autoPlay?: Prisma.SortOrder
   twentyFourSeven?: Prisma.SortOrder
+  requestChannelId?: Prisma.SortOrder
+  requestMessageId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -458,6 +500,8 @@ export type GuildSettingsMinOrderByAggregateInput = {
   allowDuplicates?: Prisma.SortOrder
   autoPlay?: Prisma.SortOrder
   twentyFourSeven?: Prisma.SortOrder
+  requestChannelId?: Prisma.SortOrder
+  requestMessageId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -510,6 +554,8 @@ export type GuildSettingsCreateWithoutGuildInput = {
   allowDuplicates?: boolean
   autoPlay?: boolean
   twentyFourSeven?: boolean
+  requestChannelId?: string | null
+  requestMessageId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -522,6 +568,8 @@ export type GuildSettingsUncheckedCreateWithoutGuildInput = {
   allowDuplicates?: boolean
   autoPlay?: boolean
   twentyFourSeven?: boolean
+  requestChannelId?: string | null
+  requestMessageId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -550,6 +598,8 @@ export type GuildSettingsUpdateWithoutGuildInput = {
   allowDuplicates?: Prisma.BoolFieldUpdateOperationsInput | boolean
   autoPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twentyFourSeven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  requestChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requestMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -562,6 +612,8 @@ export type GuildSettingsUncheckedUpdateWithoutGuildInput = {
   allowDuplicates?: Prisma.BoolFieldUpdateOperationsInput | boolean
   autoPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twentyFourSeven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  requestChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requestMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -577,6 +629,8 @@ export type GuildSettingsSelect<ExtArgs extends runtime.Types.Extensions.Interna
   allowDuplicates?: boolean
   autoPlay?: boolean
   twentyFourSeven?: boolean
+  requestChannelId?: boolean
+  requestMessageId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   guild?: boolean | Prisma.GuildDefaultArgs<ExtArgs>
@@ -591,6 +645,8 @@ export type GuildSettingsSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   allowDuplicates?: boolean
   autoPlay?: boolean
   twentyFourSeven?: boolean
+  requestChannelId?: boolean
+  requestMessageId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   guild?: boolean | Prisma.GuildDefaultArgs<ExtArgs>
@@ -605,6 +661,8 @@ export type GuildSettingsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   allowDuplicates?: boolean
   autoPlay?: boolean
   twentyFourSeven?: boolean
+  requestChannelId?: boolean
+  requestMessageId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   guild?: boolean | Prisma.GuildDefaultArgs<ExtArgs>
@@ -619,11 +677,13 @@ export type GuildSettingsSelectScalar = {
   allowDuplicates?: boolean
   autoPlay?: boolean
   twentyFourSeven?: boolean
+  requestChannelId?: boolean
+  requestMessageId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type GuildSettingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "guildId" | "announceNowPlaying" | "defaultRepeatMode" | "maxQueueSize" | "allowDuplicates" | "autoPlay" | "twentyFourSeven" | "createdAt" | "updatedAt", ExtArgs["result"]["guildSettings"]>
+export type GuildSettingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "guildId" | "announceNowPlaying" | "defaultRepeatMode" | "maxQueueSize" | "allowDuplicates" | "autoPlay" | "twentyFourSeven" | "requestChannelId" | "requestMessageId" | "createdAt" | "updatedAt", ExtArgs["result"]["guildSettings"]>
 export type GuildSettingsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   guild?: boolean | Prisma.GuildDefaultArgs<ExtArgs>
 }
@@ -648,6 +708,8 @@ export type $GuildSettingsPayload<ExtArgs extends runtime.Types.Extensions.Inter
     allowDuplicates: boolean
     autoPlay: boolean
     twentyFourSeven: boolean
+    requestChannelId: string | null
+    requestMessageId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["guildSettings"]>
@@ -1082,6 +1144,8 @@ export interface GuildSettingsFieldRefs {
   readonly allowDuplicates: Prisma.FieldRef<"GuildSettings", 'Boolean'>
   readonly autoPlay: Prisma.FieldRef<"GuildSettings", 'Boolean'>
   readonly twentyFourSeven: Prisma.FieldRef<"GuildSettings", 'Boolean'>
+  readonly requestChannelId: Prisma.FieldRef<"GuildSettings", 'String'>
+  readonly requestMessageId: Prisma.FieldRef<"GuildSettings", 'String'>
   readonly createdAt: Prisma.FieldRef<"GuildSettings", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"GuildSettings", 'DateTime'>
 }
