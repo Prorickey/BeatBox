@@ -19,11 +19,15 @@ export const SocketEvents = {
   QUEUE_MOVE: 'queue:move',
   QUEUE_CLEAR: 'queue:clear',
   SEARCH: 'search:query',
+  USER_VOICE_STATE: 'user:voiceState',
+  AUTO_JOIN: 'guild:autoJoin',
   // Server -> Client
   PLAYER_STATE: 'player:state',
   PLAYER_ERROR: 'player:error',
   SEARCH_RESULTS: 'search:results',
   QUEUE_UPDATE: 'queue:update',
+  USER_VOICE_STATE_RESULT: 'user:voiceStateResult',
+  VOICE_STATE_CHANGED: 'voice:stateChanged',
 } as const;
 
 export interface SeekPayload {
