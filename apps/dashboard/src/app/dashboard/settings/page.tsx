@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Settings, Loader2, Save, CheckCircle } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Settings, Loader2, Save, CheckCircle, Search, ChevronDown } from "lucide-react";
 
 interface Guild {
   id: string;
@@ -158,22 +158,11 @@ export default function SettingsPage() {
       </div>
 
       {/* Guild selector */}
-      <div className="mb-6">
-        <label className="mb-2 block text-sm font-medium text-muted-foreground">
-          Server
-        </label>
-        <select
-          value={selectedGuild ?? ""}
-          onChange={(e) => setSelectedGuild(e.target.value)}
-          className="w-full max-w-xs rounded-lg border bg-background px-4 py-2.5 text-sm outline-none focus:border-primary"
-        >
-          {guilds.map((g) => (
-            <option key={g.id} value={g.id}>
-              {g.name}
-            </option>
-          ))}
-        </select>
-      </div>
+      <GuildCombobox
+        guilds={guilds}
+        selectedGuild={selectedGuild}
+        onSelect={setSelectedGuild}
+      />
 
       {/* Settings form */}
       {loadingSettings ? (
@@ -246,6 +235,130 @@ export default function SettingsPage() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function GuildCombobox({
+  guilds,
+  selectedGuild,
+  onSelect,
+}: {
+  guilds: Guild[];
+  selectedGuild: string | null;
+  onSelect: (guildId: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const filtered = guilds.filter((g) =>
+    g.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const selected = guilds.find((g) => g.id === selectedGuild);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    if (open && inputRef.current) {
+      inputRef.current.focus();
+    }
+    if (!open) setSearch("");
+  }, [open]);
+
+  return (
+    <div className="relative mb-6" ref={containerRef}>
+      <label className="mb-2 block text-sm font-medium text-muted-foreground">
+        Server
+      </label>
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex w-full max-w-xs items-center gap-3 rounded-lg border bg-background px-4 py-2.5 text-sm outline-none transition-colors hover:border-primary focus:border-primary"
+      >
+        {selected ? (
+          <>
+            <GuildIcon guild={selected} size={20} />
+            <span className="flex-1 truncate text-left">{selected.name}</span>
+          </>
+        ) : (
+          <span className="flex-1 text-left text-muted-foreground">Select a server</span>
+        )}
+        <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
+
+      {open && (
+        <div className="absolute z-50 mt-1 w-full max-w-xs overflow-hidden rounded-lg border bg-card shadow-lg">
+          <div className="flex items-center gap-2 border-b px-3 py-2">
+            <Search className="h-4 w-4 text-muted-foreground" />
+            <input
+              ref={inputRef}
+              type="text"
+              placeholder="Search servers..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") setOpen(false);
+              }}
+              className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground/50"
+            />
+          </div>
+          <div className="max-h-56 overflow-y-auto p-1">
+            {filtered.length === 0 ? (
+              <div className="px-3 py-6 text-center text-sm text-muted-foreground">
+                No servers found
+              </div>
+            ) : (
+              filtered.map((g) => (
+                <button
+                  key={g.id}
+                  onClick={() => {
+                    onSelect(g.id);
+                    setOpen(false);
+                  }}
+                  className={`flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors hover:bg-muted/50 ${
+                    g.id === selectedGuild ? "bg-primary/10 text-primary" : ""
+                  }`}
+                >
+                  <GuildIcon guild={g} size={24} />
+                  <span className="truncate">{g.name}</span>
+                </button>
+              ))
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function GuildIcon({ guild, size }: { guild: Guild; size: number }) {
+  if (guild.icon) {
+    return (
+      <img
+        src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.webp?size=32`}
+        alt=""
+        width={size}
+        height={size}
+        className="rounded-full"
+      />
+    );
+  }
+  return (
+    <div
+      className="flex items-center justify-center rounded-full bg-muted text-xs font-medium"
+      style={{ width: size, height: size }}
+    >
+      {guild.name.charAt(0).toUpperCase()}
     </div>
   );
 }
