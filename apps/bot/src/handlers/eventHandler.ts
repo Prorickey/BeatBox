@@ -3,7 +3,7 @@ import { join } from "path";
 import type { BeatboxClient } from "../structures/Client";
 import { prisma } from "@beatbox/database";
 import { broadcastState } from "./socketHandler";
-import { EmbedBuilder } from "discord.js";
+import { EmbedBuilder, type TextBasedChannel } from "discord.js";
 import { EMBED_COLORS, formatDuration, truncate } from "@beatbox/shared";
 
 export async function loadEvents(client: BeatboxClient) {
@@ -66,8 +66,8 @@ export async function loadEvents(client: BeatboxClient) {
 
       // Don't announce autoplay tracks
       if (announceEnabled && requester.id !== "autoplay") {
-        const channel = client.channels.cache.get(_player.textId);
-        if (channel?.isTextBased()) {
+        const channel = client.channels.cache.get(_player.textId) as TextBasedChannel | undefined;
+        if (channel && "send" in channel) {
           const embed = new EmbedBuilder()
             .setColor(EMBED_COLORS.PRIMARY)
             .setAuthor({ name: "Now Playing 🎵" })
@@ -79,8 +79,8 @@ export async function loadEvents(client: BeatboxClient) {
               iconURL: requester.avatar ?? undefined,
             });
 
-          if (track.artwork) {
-            embed.setThumbnail(track.artwork);
+          if (track.thumbnail) {
+            embed.setThumbnail(track.thumbnail);
           }
 
           await channel.send({ embeds: [embed] });
