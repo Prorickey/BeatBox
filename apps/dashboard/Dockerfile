@@ -1,4 +1,4 @@
-FROM oven/bun:1.2.0-alpine AS deps
+FROM oven/bun:1.3.6-alpine AS deps
 WORKDIR /app
 
 COPY package.json bun.lock turbo.json ./
@@ -9,7 +9,7 @@ COPY packages/shared/package.json packages/shared/
 
 RUN bun install --frozen-lockfile
 
-FROM oven/bun:1.2.0-alpine AS build
+FROM oven/bun:1.3.6-alpine AS build
 WORKDIR /app
 
 COPY --from=deps /app .

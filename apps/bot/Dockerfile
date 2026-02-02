@@ -1,4 +1,4 @@
-FROM oven/bun:1.2.0-alpine AS build
+FROM oven/bun:1.3.6-alpine AS build
 WORKDIR /app
 
 COPY package.json bun.lock turbo.json ./
