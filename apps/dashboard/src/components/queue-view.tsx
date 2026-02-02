@@ -44,7 +44,7 @@ export function QueueView({ guildId }: { guildId: string }) {
   const [searchResults, setSearchResults] = useState<SearchTrack[]>([]);
   const [searching, setSearching] = useState(false);
   const [addingId, setAddingId] = useState<string | null>(null);
-  const searchTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const searchTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   // Playlists for search
   const [playlists, setPlaylists] = useState<PlaylistMatch[]>([]);

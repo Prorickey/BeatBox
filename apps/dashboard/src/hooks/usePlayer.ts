@@ -26,7 +26,7 @@ export function usePlayer(guildId: string) {
 
   const lastActionRef = useRef(0);
   const bufferedStateRef = useRef<PlayerState | null>(null);
-  const reconcileTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const reconcileTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   // Apply an optimistic update and schedule reconciliation
   const optimistic = useCallback(

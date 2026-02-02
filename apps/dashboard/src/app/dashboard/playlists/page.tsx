@@ -64,7 +64,7 @@ export default function PlaylistsPage() {
   const [searchResults, setSearchResults] = useState<SearchTrack[]>([]);
   const [searching, setSearching] = useState(false);
   const [addingTrackId, setAddingTrackId] = useState<string | null>(null);
-  const searchTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const searchTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
     fetch("/api/playlists")
