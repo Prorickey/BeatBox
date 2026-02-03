@@ -1,5 +1,3 @@
-import { readdir } from "fs/promises";
-import { join } from "path";
 import type { BeatboxClient } from "../structures/Client";
 import { prisma } from "@beatbox/database";
 import { broadcastState } from "./socketHandler";
@@ -7,6 +5,11 @@ import { EmbedBuilder, type TextBasedChannel } from "discord.js";
 import { EMBED_COLORS, formatDuration, truncate } from "@beatbox/shared";
 import { playerButtons } from "../utils/embeds";
 import type { KazagumoTrack } from "kazagumo";
+
+import * as readyEvent from "../events/ready";
+import * as interactionCreateEvent from "../events/interactionCreate";
+import * as voiceStateUpdateEvent from "../events/voiceStateUpdate";
+import * as messageCreateEvent from "../events/messageCreate";
 
 /**
  * Update the persistent player embed in the request channel (if configured)
@@ -92,16 +95,13 @@ export async function updateRequestChannelEmbed(
 }
 
 export async function loadEvents(client: BeatboxClient) {
-  const eventsPath = join(import.meta.dir, "..", "events");
-  const files = await readdir(eventsPath);
-  const eventFiles = files.filter((f) => f.endsWith(".ts") || f.endsWith(".js"));
+  const events = [readyEvent, interactionCreateEvent, voiceStateUpdateEvent, messageCreateEvent];
 
-  for (const file of eventFiles) {
-    const event = await import(join(eventsPath, file));
+  for (const event of events) {
     if (event.once) {
-      client.once(event.name, (...args) => event.execute(...args, client));
+      client.once(event.name, (...args: any[]) => event.execute(...args, client));
     } else {
-      client.on(event.name, (...args) => event.execute(...args, client));
+      client.on(event.name, (...args: any[]) => event.execute(...args, client));
     }
     console.log(`Loaded event: ${event.name}`);
   }

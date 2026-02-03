@@ -6,6 +6,7 @@ import type {
 import type { BeatboxClient } from "./structures/Client";
 
 export interface Command {
+  category?: string;
   data:
     | SlashCommandBuilder
     | SlashCommandSubcommandsOnlyBuilder

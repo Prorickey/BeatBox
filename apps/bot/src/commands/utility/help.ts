@@ -5,8 +5,6 @@ import {
 } from "discord.js";
 import type { BeatboxClient } from "../../structures/Client";
 import { EMBED_COLORS } from "@beatbox/shared";
-import { readdir } from "fs/promises";
-import { join } from "path";
 
 export const data = new SlashCommandBuilder()
   .setName("help")
@@ -17,46 +15,28 @@ export async function execute(
   client: BeatboxClient
 ) {
   try {
-    const commandsRoot = join(import.meta.dir, "..");
-    const categories = await readdir(commandsRoot);
-
     const embed = new EmbedBuilder()
       .setColor(EMBED_COLORS.PRIMARY)
       .setTitle("Beatbox Commands");
 
-    for (const category of categories.sort()) {
-      const categoryPath = join(commandsRoot, category);
-
-      let files: string[];
-      try {
-        files = await readdir(categoryPath);
-      } catch {
-        // Skip non-directory entries
-        continue;
+    // Group commands by category
+    const categories = new Map<string, string[]>();
+    for (const [name, command] of client.commands) {
+      const category = command.category ?? "other";
+      if (!categories.has(category)) {
+        categories.set(category, []);
       }
+      const description = command.data.description || "No description";
+      categories.get(category)!.push(`\`/${name}\` — ${description}`);
+    }
 
-      const commandFiles = files.filter(
-        (f) => f.endsWith(".ts") || f.endsWith(".js")
-      );
-
-      const lines: string[] = [];
-      for (const file of commandFiles.sort()) {
-        const commandName = file.replace(/\.(ts|js)$/, "");
-        const command = client.commands.get(commandName);
-        if (command) {
-          const description = command.data.description || "No description";
-          lines.push(`\`/${commandName}\` — ${description}`);
-        }
-      }
-
-      if (lines.length > 0) {
-        const categoryName =
-          category.charAt(0).toUpperCase() + category.slice(1);
-        embed.addFields({
-          name: categoryName,
-          value: lines.join("\n"),
-        });
-      }
+    for (const [category, lines] of [...categories.entries()].sort()) {
+      const categoryName =
+        category.charAt(0).toUpperCase() + category.slice(1);
+      embed.addFields({
+        name: categoryName,
+        value: lines.sort().join("\n"),
+      });
     }
 
     embed.setFooter({ text: "Visit the dashboard for more info" });
