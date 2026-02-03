@@ -9,17 +9,20 @@ services:
       DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
       # Lavalink
       LAVALINK_HOST: lavalink
-      LAVALINK_PORT: 2333
+      LAVALINK_PORT: 8080
       LAVALINK_PASSWORD: ${LAVALINK_PASSWORD:-youshallnotpass}
       # Database
       DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-beatbox}
       # Socket.io
       SOCKET_PORT: 3001
     depends_on:
-      migrate:
-        condition: service_completed_successfully
       lavalink:
-        condition: service_started
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:3001/"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     restart: unless-stopped
 
   dashboard:
@@ -35,21 +38,12 @@ services:
       # NextAuth
       NEXTAUTH_URL: https://beatbox.bedson.tech
       NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
-    depends_on:
-      migrate:
-        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:3000/"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     restart: unless-stopped
-
-  migrate:
-    build:
-      context: .
-      dockerfile: packages/database/Dockerfile.migrate
-    environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-beatbox}
-    depends_on:
-      postgres:
-        condition: service_healthy
-    restart: "no"
 
   postgres:
     image: postgres:16-alpine
@@ -71,9 +65,14 @@ services:
   lavalink:
     image: ghcr.io/lavalink-devs/lavalink:4
     ports:
-      - "3304:2333"
+      - "3304:8080"
     volumes:
       - ./lavalink/application.yml:/opt/Lavalink/application.yml
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:8080/version"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     restart: unless-stopped
 
 volumes:
